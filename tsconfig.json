@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "target": "ES2023",
+        "removeComments": false,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "strictNullChecks": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "strictFunctionTypes": true,
+        "outDir": "dist",
+        "rootDir": "."
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
