@@ -15,7 +15,8 @@
         "noImplicitAny": true,
         "strictFunctionTypes": true,
         "outDir": "dist",
-        "rootDir": "."
+        "rootDir": ".",
+        "types": ["./@types/steam"]
     },
     "exclude": [
         "node_modules",
