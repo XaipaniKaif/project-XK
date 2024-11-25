@@ -7,7 +7,6 @@ export default {
         const name = interaction.options.getString('name', true);
         const currency = interaction.options.getString('currency');
         const searchURL = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(name)}&l=russian&cc=${currency || 'us'}`;
-        console.log(currency);
         await interaction.deferReply();
         const resultSeach = await axios.get(searchURL)
             .then((response) => response.data)
@@ -35,12 +34,12 @@ export default {
                 dataGame = checkGames;
             }
             const reply = await i.editReply({ embeds: [detailsGame.embed], components: [detailsGame.component] });
-            const collector = reply.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 180_000 });
+            const collector = reply.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 120_000 });
             collector.on('collect', async (i) => {
                 await i.deferReply({ ephemeral: true });
                 const value = i.values[0];
                 if (value === 'website') {
-                    await i.editReply({ content: dataGame.data?.website || 'Сайт отсуствует или не найден' });
+                    await i.editReply({ content: dataGame.data?.website || 'Сайт отсутствует или не найден' });
                 }
                 else if (value === 'sysreq') {
                     await i.editReply({ embeds: [steam.pcRecomendations(dataGame).embed] });

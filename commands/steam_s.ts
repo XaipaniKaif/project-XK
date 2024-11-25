@@ -11,7 +11,6 @@ export default {
 
         const searchURL = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(name)}&l=russian&cc=${currency || 'us'}`;
 
-        console.log(currency)
         await interaction.deferReply()
 
         const resultSeach: ResultSeachSteam = await axios.get(searchURL)
@@ -36,7 +35,7 @@ export default {
 
             let dataGame: DetailsGame
             let detailsGame: {embed: EmbedBuilder, component: ActionRowBuilder<StringSelectMenuBuilder>}
-
+            
             if (!checkGames.success) { 
                 const gameDetailsUrlRepit = `https://store.steampowered.com/api/appdetails?appids=${id}&l=russian&cc=us`
                 dataGame = (await axios.get(gameDetailsUrlRepit)).data[id]
@@ -44,8 +43,9 @@ export default {
             } else {
                 detailsGame = steam.gameDetails(checkGames)
                 dataGame = checkGames
+                
             }
-
+            
             const reply = await i.editReply({embeds: [detailsGame.embed], components: [detailsGame.component]})
 
             const collector = reply.createMessageComponentCollector({componentType: ComponentType.StringSelect, time: 120_000})
@@ -54,7 +54,7 @@ export default {
                 await i.deferReply({ephemeral: true})
                 const value = i.values[0]
                 if (value === 'website') {
-                    await i.editReply({content: dataGame.data?.website || 'Сайт отсуствует или не найден'})
+                    await i.editReply({content: dataGame.data?.website || 'Сайт отсутствует или не найден'})
                 } else if (value === 'sysreq') {
                     await i.editReply({embeds: [steam.pcRecomendations(dataGame).embed]})
                 } else if (value === 'screenshots') {

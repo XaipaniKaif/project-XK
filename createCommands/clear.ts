@@ -24,7 +24,7 @@ export function data() {
             .setNameLocalization('ru', 'пользователь')
             .setDescription('Пользователь, чьи сообщения нужно удалить')
         )
-        .addNumberOption((option) => option
+        .addIntegerOption((option) => option
             .setName('time')
             .setDescription('Время в минутах, за которое нужно удалить сообщения')
             .setNameLocalization('ru', 'время')

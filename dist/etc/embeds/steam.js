@@ -27,15 +27,18 @@ export default {
         let embed = new EmbedBuilder()
             .setAuthor({ name: `Разработчики: ${data.data.developers.join(', ')}\nИздатель: ${data.data.publishers.join(', ')}` })
             .setTitle(data.data.name)
-            .setThumbnail(data.data.header_image)
+            .setImage(data.data.header_image)
             .setColor('Random')
             .setDescription(description.slice(0, 4096))
             .addFields({ name: 'Дата выхода', value: data.data.release_date.date, inline: true });
         if (data.data.metacritic) {
             embed.addFields({ name: 'Metacritic', value: data.data.metacritic.score.toString(), inline: true });
         }
-        if (data.data.is_free === false) {
+        if (data.data.price_overview && data.data.is_free === false) {
             embed.addFields({ name: 'Цена', value: `${data.data.price_overview.final_formatted} ${data.data.price_overview.currency}`, inline: true }, { name: 'Скидка', value: `${data.data.price_overview.discount_percent}%`, inline: true });
+        }
+        else if (!data.data.price_overview && data.data.is_free === false) {
+            embed.addFields({ name: 'Цена', value: 'В настоящее время неизвестна', inline: true });
         }
         else {
             embed.addFields({ name: 'Цена', value: 'Бесплатно', inline: true });
@@ -59,7 +62,7 @@ export default {
                 .setTitle('Системные требования')
                 .setColor('Random')
                 .setDescription(`
-                ${minimum}\n
+                ${minimum}
                 ${maximum}
             `)
         };

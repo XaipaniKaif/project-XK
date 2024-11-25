@@ -11,9 +11,9 @@ export default {
             .setColor('Random')
             .setTitle('Моя информация')
             .setDescription(`
-            Скорость моих ответов: \`${ping} ms\`
-            На скольких я серверах: \`${guilds}\`
-            Количество моих пользователей: \`${users}\`
+        Скорость моих ответов: \`${ping} ms\`
+        На скольких я серверах: \`${guilds}\`
+        Количество моих пользователей: \`${users}\`
         `);
         const components = new ActionRowBuilder().addComponents(new ButtonBuilder()
             .setLabel('Сервер поддержки')

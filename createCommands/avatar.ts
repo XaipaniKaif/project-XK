@@ -9,5 +9,7 @@ export function data() {
         .setContexts([InteractionContextType.Guild, InteractionContextType.PrivateChannel])
         .setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
         .setType(2)
+        
+        
     )
 }

@@ -1,11 +1,16 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuBuilder } from "discord.js"
 import { htmlToText } from "html-to-text"
+
+
+
+
 export default {
     nullTotal: new EmbedBuilder()
     .setColor('Red')
     .setDescription(`
         По вашему запоосу ничего не найдено( Проверьте правильность
     `),
+
     listGames: function(data: ResultSeachSteam, interaction: ChatInputCommandInteraction) {
         const values = data.items.map((item) => {return {value: item.id.toString(), label: item.name.slice(0, 100)}})
         return {
@@ -16,6 +21,7 @@ export default {
             .setDescription(`
                 По вашему запросу было найдено игр: \`${data.total} \` 
             `),
+
             component: new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
                 new StringSelectMenuBuilder()
                 .setCustomId('listGamesSteam')
@@ -25,12 +31,13 @@ export default {
 
         }
     },
+
     gameDetails: function(data: DetailsGame, success?: boolean) {
         const description = htmlToText(data.data.detailed_description, { wordwrap: 130 , preserveNewlines: true})
         let embed = new EmbedBuilder()
             .setAuthor({name: `Разработчики: ${data.data.developers.join(', ')}\nИздатель: ${data.data.publishers.join(', ')}`})
             .setTitle(data.data.name)
-            .setThumbnail(data.data.header_image)
+            .setImage(data.data.header_image)
             .setColor('Random')
             .setDescription(description.slice(0, 4096))
             .addFields(
@@ -39,11 +46,14 @@ export default {
         if (data.data.metacritic) { 
             embed.addFields({name: 'Metacritic', value: data.data.metacritic.score.toString(), inline: true})
         }
-        if (data.data.is_free === false) {
+        
+        if (data.data.price_overview && data.data.is_free === false) {
             embed.addFields(
                 {name: 'Цена', value: `${data.data.price_overview.final_formatted} ${data.data.price_overview.currency}`, inline: true},
                 {name: 'Скидка', value: `${data.data.price_overview.discount_percent}%`, inline: true},
             )
+        } else if (!data.data.price_overview && data.data.is_free === false) {
+            embed.addFields({name: 'Цена', value: 'В настоящее время неизвестна', inline: true})
         } else {
             embed.addFields({name: 'Цена', value: 'Бесплатно', inline: true})
         }
@@ -62,7 +72,7 @@ export default {
                     {label: 'Системные требования', value: 'sysreq', emoji: '🖥️'},
                     {label: 'Скриншоты', value: 'screenshots', emoji: '🖼️'},
                     {label: 'Видео', value: 'videos', emoji: '🎥'},
-                    {label: 'Перейти в магазин', value: 'store', emoji: '🛒'}
+                    {label: 'Перейти в магазин', value: 'store', emoji: '🛒'},
                 )
             )
         }
@@ -75,7 +85,7 @@ export default {
             .setTitle('Системные требования')
             .setColor('Random')
             .setDescription(`
-                ${minimum}\n
+                ${minimum}
                 ${maximum}
             `)
         }

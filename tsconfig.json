@@ -16,7 +16,8 @@
         "strictFunctionTypes": true,
         "outDir": "dist",
         "rootDir": ".",
-        "types": ["./@types/steam"]
+        "types": ["./@types/steam"],
+        "resolveJsonModule": true
     },
     "exclude": [
         "node_modules",
